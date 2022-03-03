@@ -21,7 +21,7 @@ public:
 	Creature(const string& nom, unsigned int attaque, 
 		unsigned int defense, unsigned int pointDeVie, unsigned int energie, Pouvoir pouvoir);
 	Creature (const Creature & c);
-	~Creature() {}//***********************************
+	virtual ~Creature() = default;//{}//***********************************
 	// todo: définir le destructeur
     
 	string obtenirNom() const;
