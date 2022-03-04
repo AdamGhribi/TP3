@@ -19,14 +19,27 @@ CreatureMagique::CreatureMagique(const Creature& creature, unsigned int potionMa
 
 // todo:
 // Faire l'initialisation de tout les attributs
-CreatureMagique::CreatureMagique(const CreatureMagique& creature): Creature(creature){}
+CreatureMagique::CreatureMagique(const CreatureMagique& creature): Creature(creature), potionMagique_(0) {}
 
 // todo
 // Faire la surcharge de l'opérateur = de maniere a ce que
 // les attributs de la creatureExperience puisse etre copie
 // dans l'objet courant.
 CreatureMagique& CreatureMagique::operator= (const CreatureMagique&  creature) {
-
+    if (this != &creature) {
+        nom_ = creature.nom_;
+        attaque_ = creature.attaque_;
+        defense_ = creature.defense_;
+        pointDeVie_ = creature.pointDeVie_;
+        pointDeVieTotal_ = creature.pointDeVieTotal_;
+        energie_ = creature.energie_;
+        energieTotal_ = creature.energieTotal_;
+        experience_ = creature.experience_;
+        experienceNecessaire_ = creature.experienceNecessaire_;
+        niveau_ = creature.niveau_;
+        pouvoir_ = make_unique<Pouvoir>(*creature.pouvoir_);
+        potionMagique_ = creature.potionMagique_;
+    }
 	   return * this;
 }
 
@@ -43,7 +56,11 @@ void CreatureMagique::attaquer(Creature & creature)
     // d'ajouter des points de vie à la créature que la
     // somme que vous ajoutez ne fait pas dépasser son
     // point de vie total.
-    
+    if ((creature.obtenirPointDeVie() + potionMagique_) > creature.obtenirPointDeVieTotal()) 
+        creature.modifierPointDeVie(creature.obtenirPointDeVieTotal());
+    else{
+        creature.modifierPointDeVie(creature.obtenirPointDeVie() + potionMagique_);
+    }
     
     
     // todo
@@ -52,7 +69,57 @@ void CreatureMagique::attaquer(Creature & creature)
     // la creature est magique, ce qui la rend mal habile.
     // Ses attaques ne fonctionnent pas uniquement 1 fois sur 4.
     // Son attaque ne fonctionnera pas si tentative est de 2.
-    
+    if (energie_ >= pouvoir_->obtenirEnergieNecessaire()) {
+        if (creature.obtenirPointDeVie() >= 0) {
+
+            int degat = 0;
+
+            int degatPotentiel = static_cast<int>(pouvoir_->obtenirNombreDeDegat()) * (static_cast<int>(attaque_) / 2);
+
+            // Determiner la defense restante de la creature
+            int defenseRestante = static_cast<int>(creature.obtenirDefense()) - degatPotentiel;
+
+            if (defenseRestante < 0)
+            {
+                degat = -defenseRestante;
+                creature.modifierDefense(0);
+            }
+            else {
+                creature.modifierDefense(defenseRestante);
+            }
+
+            // L'attaque rate une fois sur 4
+            int tentative = rand() % 4;
+
+            if (tentative != 2) {
+
+                std::cout << nom_ << " lance " << pouvoir_->obtenirNom() << " qui inflige " << degat << " degat a " << creature.obtenirNom() << endl;
+
+                if (degat > creature.obtenirPointDeVie()) {
+                    creature.modifierPointDeVie(0);
+                    int xp = experienceGagnee(creature);
+
+                    cout << nom_ << " a gagne " << xp << " XP" << endl << endl;
+                }
+                else {
+                    creature.modifierPointDeVie(creature.obtenirPointDeVie() - degat);
+                }
+
+                cout << creature.obtenirNom() << " a encore " << creature.obtenirPointDeVie() << " PV" << endl;
+                energie_ -= pouvoir_->obtenirEnergieNecessaire();
+            }
+            else {
+                std::cout << "Attaque " << pouvoir_->obtenirNom() << " a echouee" << endl;
+            }
+        }
+        else {
+            std::cout << "Vous deja avez vaincu " << creature.obtenirNom() << endl;
+        }
+    }
+    else
+    {
+        cout << this->obtenirNom() << " n'as plus assez d'énergie pour se battre" << endl;
+    }
     // indice 1: Il s'agit d'une nouvelle implementation de la
     // methode attaquer. Par contre, elle est extremement
     // similaire a celle de la classe de base a quelque details
@@ -70,7 +137,8 @@ void CreatureMagique::attaquer(Creature & creature)
 // 2. affiche la potion magique de la creature
 void CreatureMagique::afficher() const
 {
-
+    cout << "Creature magique: " << endl;
+    cout << obtenirNom() << " a comme potion magique: " << obtenirPotionMagique() << endl;
 }
 
 // todo
@@ -80,6 +148,8 @@ void CreatureMagique::afficher() const
 // de la classe parent.
 std::ostream& operator<<(std::ostream & os, const CreatureMagique& creature)
 {
+    os << creature;
+    creature.afficher();
 	return os;
 }
 
