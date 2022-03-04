@@ -27,7 +27,7 @@ public:
     
     // todo:
     // definir le destructeur virtuel par default.
-	//*********************deja fait?	
+		
 	virtual ~Dresseur() = default;
 	string obtenirNom() const;
 	void modifierNom(const string& nom);

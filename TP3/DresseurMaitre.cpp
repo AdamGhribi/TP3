@@ -9,19 +9,12 @@ Date de modification:
 // todo:
 // Faire l'initialisation de tout les attributs
 DresseurMaitre::DresseurMaitre(const string& nom, const string& nomObjetMagique,
-                int bonus, int anneeExperience )
-{
-    string nom_ = nom;
-    string nomObjetMagique_ = nomObjetMagique;
-    int bonus_ = bonus;
-    int anneeExperience_ = anneeExperience;
-    
-}
+                int bonus, int anneeExperience ) : Dresseur(nom,nomObjetMagique, bonus), anneeExperience_(anneeExperience){}
 
 
 //todo
 // méthode de la classe Interface
-unsigned int DresseurMaitre::obtenirExperience() const  { return anneeExperience_;}//quoi faire?
+unsigned int DresseurMaitre::obtenirExperience() const  { return anneeExperience_;}
 
 // méthode de la classe dérivée
 // on ajoute les années d'expérience au bonus de l'objet magique
@@ -78,8 +71,8 @@ void DresseurMaitre::utiliserObjetMagique(shared_ptr<Creature> creature) {
 void DresseurMaitre::afficher() const
 {
     std::cout << this->obtenirNom() << " est un Maitre Dresseur" << endl 
-        << "et a comme annee d'experience : " << this->obtenirExperience();
-    //***quoi faire au 1????
+        << "et a comme annee d'experience : " << this->obtenirExperience()<< endl;
+    
 }
 
 // todo
@@ -89,6 +82,10 @@ void DresseurMaitre::afficher() const
 ostream& operator<<(ostream& os, const DresseurMaitre& dresseur)
 {
     dresseur.afficher();
+
+    os << static_cast<Dresseur>(dresseur);
+
+    //****
     
     return os;
 }

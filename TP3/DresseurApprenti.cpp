@@ -42,13 +42,13 @@ void DresseurApprenti::utiliserObjetMagique(shared_ptr<Creature> creature) {
     
     // indice 2: Fiez-vous au test sur les objets magiques
     //WYM??
-    if ((creature->obtenirPointDeVieTotal() - creature->obtenirPointDeVie()) >= bonusApprenti) {
+    if ((creature->obtenirPointDeVieTotal() - creature->obtenirPointDeVie()) >= objetMagique_.obtenirBonus() ) {
 		creature->modifierPointDeVie(creature->obtenirPointDeVie() + bonusApprenti);
 	}
 	else {
 		creature->modifierPointDeVie(creature->obtenirPointDeVieTotal());
 	}
-	if ((creature->obtenirEnergieTotale() - creature->obtenirEnergie()) > bonusApprenti)
+	if ((creature->obtenirEnergieTotale() - creature->obtenirEnergie()) > objetMagique_.obtenirBonus() )
     {
 		creature->modifierEnergie(creature->obtenirEnergie() + bonusApprenti);
 	}
@@ -74,7 +74,7 @@ ostream& operator<<(ostream& os, const DresseurApprenti& dresseur) {
        
         os << static_cast<Dresseur>(dresseur);
 
-        os << "a un taux d'echec de " << dresseur.tauxEchec_ << endl;
+        os << " a un taux d'echec de " << dresseur.tauxEchec_ << endl;
     
 
     return os;

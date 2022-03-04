@@ -40,7 +40,7 @@ bool PolyLand::ajouterCreature(const shared_ptr<Creature>& creature) {
 	creatures_.push_back(creature);
 
 	if (dynamic_cast<Experience*>(creature.get())) {
-		personnagesExperimentes_.push_back(dynamic_cast<DresseurMaitre*>(creature.get()));
+		personnagesExperimentes_.push_back(dynamic_cast<CreatureExperience*>(creature.get()));
 	}
     
     // todo
@@ -81,10 +81,10 @@ bool PolyLand::retirerDresseur(const string& nom) {
 void PolyLand::retirerExperience( const string& nom )
 {
 	for (unsigned int i = 0; i < personnagesExperimentes_.size(); i++) {
-		if (personnagesExperimentes_[i]->obtenirNomExperience() == nom) //************
+		if (personnagesExperimentes_[i]->obtenirNomExperience() == nom) {
 			personnagesExperimentes_[i] = personnagesExperimentes_.back();
 			personnagesExperimentes_.pop_back();
-		
+		}
 	}
     // Faire l'iteration de tous les personnagesExperimentes
     // et verifier que le pointeur passe en parametre correspond
@@ -222,7 +222,11 @@ ostream& operator<<(ostream& os, const PolyLand& poly) {
 // a partir du vector personnagesExperimentes_ (voir l'affichage)
 void PolyLand::afficherExperience() const
 {
-	   //ou est l'affichage//boucle sur vecteur peronnage experimente pr chq elem  on utilise<<
+	for (auto& i : personnagesExperimentes_) {
+		cout << i << endl;
+		//i->afficher();
+	}
+	//*******lequel
 }
 
 vector<Experience *> PolyLand::obtenirExperience() const
@@ -236,8 +240,13 @@ vector<Experience *> PolyLand::obtenirExperience() const
 // des methodes propre a experience)
 Experience* PolyLand::trouverPlusGrandeExperience(){
 	int nombreMaxAnneeExperience = 0;
+	Experience* pointeurMax = nullptr;
 	for (const auto& i : personnagesExperimentes_) {
-		
+		if (nombreMaxAnneeExperience < i->obtenirExperience()) {
+			nombreMaxAnneeExperience = i->obtenirExperience();
+			pointeurMax = i;
+		}
 	}
-    return nullptr;
+    return pointeurMax;
+	
 }
