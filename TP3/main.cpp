@@ -19,7 +19,6 @@ int main() {
     std::map<std::string, int[2]> test;
 
 
-
     // Vérification des méthodes des classes de bases
     // Ne compte pas, devrait marcher par défaut | Ponderation: 1pts
     if (true)
@@ -185,13 +184,13 @@ int main() {
         }
 
         // Verification: Constructeur par copie
-        if (creaExp2->obtenirNom() != "Impenetrable" ||
-            creaExp2->obtenirAttaque() != 5 ||
-            creaExp2->obtenirDefense() != 10 ||
-            creaExp2->obtenirPointDeVie() != 5 ||
-            creaExp2->obtenirEnergie() != 30 ||
-            creaExp2->obtenirForceExperience() != 20 ||
-            creaExp2->obtenirExperience() != 20)
+        if (creaExp4->obtenirNom() != "Chachacha" ||
+            creaExp4->obtenirAttaque() != 0 ||
+            creaExp4->obtenirDefense() != 0 ||
+            creaExp4->obtenirPointDeVie() != 0 ||
+            creaExp4->obtenirEnergie() != 0 ||
+            creaExp4->obtenirForceExperience() != 0 ||
+            creaExp4->obtenirExperience() != 0)
         {
             test["TEST2"][1] = 0;
         }
@@ -323,12 +322,12 @@ int main() {
 
         Pouvoir eau("eau", 1, 10);
         CreatureMagique theGreatMagician("theGreatMagician", 5, 10, 5, 30, eau, 20);
-        CreatureMagique prodige = theGreatMagician;
+        CreatureMagique prodige = CreatureMagique().operator=(theGreatMagician);
         prodige.modifierNom("prodige");
 
         Pouvoir plasma("plasma", 1, 9);
         CreatureExperience soldatBlanc("soldatBlanc", 5, 9, 5, 30, plasma, 20);
-        CreatureExperience soldatRouge = soldatBlanc;
+        CreatureExperience soldatRouge = CreatureExperience().operator=(soldatBlanc);
         soldatRouge.modifierNom("soldatRouge");
 
         if (theGreatMagician.obtenirExperience() != prodige.obtenirExperience() ||
@@ -483,12 +482,6 @@ int main() {
         cout << poly;
 
         poly.afficherExperience();
-
-        // TODO: Decommenter une fois l'implementation de Experience et de ces classes enfant est terminee
-        //if (hiker->obtenirExperience() != poly.trouverPlusGrandeExperience()->obtenirExperience()) {
-        //    test["TEST6"][1] = 0;
-        //}
-
 
         poly.retirerDresseur("Nick");
         poly.retirerDresseur("Hiker");

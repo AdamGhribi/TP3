@@ -38,6 +38,9 @@ public:
     // Experience contiendra la methode
 	unsigned int obtenirExperience() const override;
     
+    //
+    string obtenirNomExperience()  const override;
+
 private:
      // un dresseur  a des années d'expérience
 	 unsigned int  anneeExperience_;

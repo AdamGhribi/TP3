@@ -19,7 +19,7 @@ CreatureMagique::CreatureMagique(const Creature& creature, unsigned int potionMa
 
 // todo:
 // Faire l'initialisation de tout les attributs
-CreatureMagique::CreatureMagique(const CreatureMagique& creature): Creature(creature), potionMagique_(0) {}
+CreatureMagique::CreatureMagique(const CreatureMagique& creature): Creature(creature), potionMagique_(creature.obtenirPotionMagique()) {}
 
 // todo
 // Faire la surcharge de l'opérateur = de maniere a ce que
@@ -137,8 +137,9 @@ void CreatureMagique::attaquer(Creature & creature)
 // 2. affiche la potion magique de la creature
 void CreatureMagique::afficher() const
 {
-    cout << "Creature magique: " << endl;
-    cout << obtenirNom() << " a comme potion magique: " << obtenirPotionMagique() << endl;
+    
+    cout << obtenirNom() << " est une creature magique"<<endl
+        <<"et a une potion magique de " << obtenirPotionMagique() << endl;
 }
 
 // todo
@@ -148,8 +149,9 @@ void CreatureMagique::afficher() const
 // de la classe parent.
 std::ostream& operator<<(std::ostream & os, const CreatureMagique& creature)
 {
-    os << creature;
     creature.afficher();
+    os << static_cast<Creature>(creature);
+ 
 	return os;
 }
 

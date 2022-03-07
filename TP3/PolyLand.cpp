@@ -222,9 +222,14 @@ ostream& operator<<(ostream& os, const PolyLand& poly) {
 // a partir du vector personnagesExperimentes_ (voir l'affichage)
 void PolyLand::afficherExperience() const
 {
+	cout << endl << "Personnages experimentes";
+	cout << endl;
+	cout << endl;
+	
 	for (auto& i : personnagesExperimentes_) {
-		cout << i << endl;
-		//i->afficher();
+		//cout << i << endl;
+		i->afficher();
+		cout << endl;
 	}
 	//*******lequel
 }

@@ -34,6 +34,9 @@ public:
     // todo: ajouter override une fois que Experience sera cree
 	unsigned int obtenirExperience () const override;
 
+    //
+    string obtenirNomExperience()  const override;
+
     // todo
     friend std::ostream& operator<<(std::ostream& os, const CreatureExperience& creature);
 	

@@ -16,7 +16,7 @@ CreatureExperience::CreatureExperience(const Creature& creature, unsigned int fo
 
 // todo:
 // Faire l'initialisation de tout les attributs
-CreatureExperience:: CreatureExperience(const CreatureExperience & creature): Creature(creature),forceExperience_(0) {}
+CreatureExperience:: CreatureExperience(const CreatureExperience & creature): Creature(creature),forceExperience_(creature.obtenirForceExperience()) {}
 
 // todo
 // Faire la surcharge de l'opérateur = de maniere a ce que
@@ -125,8 +125,9 @@ void CreatureExperience::attaquer(Creature& creature)
 // sa force experience.
 void CreatureExperience::afficher() const
 {
-    cout << "Creature d'experience: " << endl;
-    cout << obtenirNom() << " a comme force experience: " << obtenirForceExperience() << endl;
+    
+    cout << obtenirNom() << " est une creature d'experiences"<<endl
+        << "et a une force d'experience de " << obtenirForceExperience() << endl;
 
 }
 
@@ -137,8 +138,9 @@ void CreatureExperience::afficher() const
 // de la classe parent.
 std::ostream& operator<<(std::ostream & os, const CreatureExperience& creature)
 {
-    os << creature;
     creature.afficher();
+    os << static_cast<Creature>(creature);
+   
 	return os;
 }
 
@@ -146,7 +148,7 @@ std::ostream& operator<<(std::ostream & os, const CreatureExperience& creature)
 // doit retourner l'attribut forceExperience_ de l'objet courant
 unsigned int CreatureExperience::obtenirExperience () const
 {
-    return experience_;
+    return forceExperience_;
 }
 
 unsigned int CreatureExperience::obtenirForceExperience() const
@@ -157,4 +159,10 @@ unsigned int CreatureExperience::obtenirForceExperience() const
 void CreatureExperience::modifierForceExperience(unsigned int forceExperience)
 {
 	forceExperience_ = forceExperience;
+}
+
+
+string CreatureExperience::obtenirNomExperience() const
+{
+    return nom_;
 }

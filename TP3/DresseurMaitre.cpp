@@ -81,13 +81,20 @@ void DresseurMaitre::afficher() const
 // attributs. ( Utilisez la surcharge de la classe parent )
 ostream& operator<<(ostream& os, const DresseurMaitre& dresseur)
 {
-    dresseur.afficher();
+    
 
     os << static_cast<Dresseur>(dresseur);
-
+    os << endl;
+    dresseur.afficher();
     //****
     
     return os;
+}
+
+//
+string DresseurMaitre::obtenirNomExperience() const
+{
+    return nom_;
 }
 
 

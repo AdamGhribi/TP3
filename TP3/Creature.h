@@ -70,7 +70,7 @@ protected:
 	unsigned int experience_;
 	unsigned int experienceNecessaire_;
 	unsigned int niveau_;
-	unique_ptr<Pouvoir> pouvoir_;
+	unique_ptr<Pouvoir> pouvoir_ ;
 	
 };
 #endif
